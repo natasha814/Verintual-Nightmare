@@ -3,7 +3,11 @@ package src.main.java.openworld.Location;
 import java.util.Scanner;
 
 import src.main.java.openworld.Item;
+import src.main.java.openworld.JumpScare;
 import src.main.java.openworld.Player.Player;
+
+import java.io.File;
+import javax.sound.sampled.*;
 
 public class ClownHouse extends Location {
     private Item item;
@@ -13,8 +17,38 @@ public class ClownHouse extends Location {
         this.item = item;
     }
 
+    String circusPath = "src/main/resources/circus.wav";
+
+    Thread circusThread = new Thread(() -> {
+        try {
+
+            File audioFile = new File(circusPath);
+
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+
+            Clip clip = AudioSystem.getClip();
+
+            clip.open(audioStream);
+
+            clip.start();
+
+            clip.addLineListener(event -> {
+                if (event.getType() == LineEvent.Type.STOP) {
+                    clip.close();
+                }
+            });
+            Thread.sleep(clip.getMicrosecondLength() / 1000);
+            audioStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    });
+
     @Override
     public void enter(Player player) {
+        JumpScare jumpScare = new JumpScare();
+        circusThread.start();
+        jumpScare.imageJump("src/main/java/openworld/images/tent.jpg", 1000);
         System.out.println("You enter the " + getName() + ": " + getDescription());
         if (item != null) {
             String a_or_an = "a ";

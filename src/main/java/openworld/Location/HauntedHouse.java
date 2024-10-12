@@ -1,9 +1,14 @@
 package src.main.java.openworld.Location;
 
 import java.util.Scanner;
+import java.util.random.RandomGenerator.JumpableGenerator;
 
 import src.main.java.openworld.Item;
+import src.main.java.openworld.JumpScare;
 import src.main.java.openworld.Player.Player;
+
+import java.io.File;
+import javax.sound.sampled.*;
 
 public class HauntedHouse extends Location {
     private Item item;
@@ -13,8 +18,38 @@ public class HauntedHouse extends Location {
         this.item = item;
     }
 
+    String hauntedPath = "src/main/resources/haunted.wav";
+
+    Thread huantedThread = new Thread(() -> {
+        try {
+
+            File audioFile = new File(hauntedPath);
+
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+
+            Clip clip = AudioSystem.getClip();
+
+            clip.open(audioStream);
+
+            clip.start();
+
+            clip.addLineListener(event -> {
+                if (event.getType() == LineEvent.Type.STOP) {
+                    clip.close();
+                }
+            });
+            Thread.sleep(clip.getMicrosecondLength() / 1000);
+            audioStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    });
+
     @Override
     public void enter(Player player) {
+        JumpScare jumpScare = new JumpScare();
+        huantedThread.start();
+        jumpScare.imageJump("src/main/java/openworld/images/house.jpg", 2000);
         System.out.println("You enter the " + getName() + ": " + getDescription());
         if (item != null) {
             String a_or_an = "a ";

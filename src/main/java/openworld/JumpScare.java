@@ -28,6 +28,8 @@ public class JumpScare {
 
         // Center the frame on the screen
         frame.setLocationRelativeTo(null);
+        // Set the frame to be always on top
+        frame.setAlwaysOnTop(true);
         
         // Make the frame visible
         frame.setVisible(true);
