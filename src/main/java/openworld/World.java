@@ -39,6 +39,8 @@ public class World {
 
     public static void main(String[] args) {
         World world = new World();
+        JumpScare jumpScare = new JumpScare();
+        jumpScare.imageJump("src/main/java/openworld/forest.jpg", 2000);
 
         String filePath = "src/main/resources/background.wav";
 
@@ -95,6 +97,7 @@ public class World {
             if (userInput.hasNextLine()) {
                 char info = userInput.nextLine().charAt(0);
                 if (info != 'I') {
+                    jumpScare.imageJump("openworld/scary1.png", 500);
                     System.out.println("Only Capitalized 'I'. Do not make me mad.");
                 } else {
                     valid = true;
@@ -142,13 +145,13 @@ public class World {
             GameGrid.printGrid(rows, cols, dotRow, dotCol);
 
             // Get user input for moving the dot
-            System.out.print("Move (n - north, s - south, e - east, w - west, q - quit): ");
+            System.out.print("Move (w - north, s - south, d - east, a - west, q - quit): ");
             if (userInput.hasNextLine()) {
                 char move = userInput.nextLine().charAt(0);
 
                 // Update dot's position based on input
                 switch (move) {
-                    case 'n':
+                    case 'w':
                         if (dotRow > 0)
                             dotRow--; // Move up
                         break;
@@ -156,11 +159,11 @@ public class World {
                         if (dotRow < rows - 1)
                             dotRow++; // Move down
                         break;
-                    case 'e':
+                    case 'd':
                         if (dotCol < cols - 1)
                             dotCol++; // Move right
                         break;
-                    case 'w':
+                    case 'a':
                         if (dotCol > 0)
                             dotCol--; // Move left
                         break;
@@ -169,7 +172,7 @@ public class World {
                         userInput.close();
                         return; // Exit the program
                     default:
-                        System.out.println("Invalid input! Use n, s, e, w, or q.");
+                        System.out.println("Invalid input! Use w, a, s, d, or q.");
                 }
             }
         }
