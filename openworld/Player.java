@@ -1,6 +1,8 @@
+package openworld;
 import java.util.ArrayList;
 import java.util.List;
-import Location.Location;
+
+import openworld.Location.Location;
 
 public class Player {
     private String name;
