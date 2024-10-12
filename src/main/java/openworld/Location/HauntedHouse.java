@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Scanner;
 import javax.sound.sampled.*;
 
+import src.main.java.openworld.AudioManager;
 import src.main.java.openworld.Item;
 import src.main.java.openworld.JumpScare;
 import src.main.java.openworld.Player.Player;
@@ -21,34 +22,29 @@ public class HauntedHouse extends Location {
     public void enter(Player player) {
         JumpScare jumpScare = new JumpScare();
 
-        // Create a new Thread instance each time enter() is called
+        // Play the audio using AudioManager
         Thread hauntedThread = new Thread(() -> {
-            try {
-                File audioFile = new File(hauntedPath);
-                AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
-                Clip clip = AudioSystem.getClip();
-                clip.open(audioStream);
-                clip.start();
-
-                // Add a listener to close the clip when finished
-                clip.addLineListener(event -> {
-                    if (event.getType() == LineEvent.Type.STOP) {
-                        clip.close();
-                    }
-                });
-
-                // Wait for the audio to finish playing
-                while (clip.isRunning()) {
-                    Thread.sleep(100); // Check every 100 ms if the clip is still running
-                }
-
-                audioStream.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            AudioManager.playAudio(hauntedPath);
         });
 
         hauntedThread.start(); // Start the new thread
+
+        // Display the jumpscare and location description
+        jumpScare.imageJump("src/main/java/openworld/images/house.jpg", 2000);
+        System.out.println("You enter the " + getName() + ": " + getDescription());
+
+        if (item != null) {
+            String a_or_an = checkFirstLetterVowel(item) ? "an " : "a ";
+            System.out.println("You see " + a_or_an + item.name().toLowerCase() + " here.");
+
+            Scanner userIn = new Scanner(System.in);
+            System.out.println("Would you like to pick it up? [Y/N]");
+            char info = userIn.nextLine().toLowerCase().charAt(0);
+
+            if (info == 'y') {
+                player.getInventory().addItem(item);
+            }
+        }
 
         // Display the jumpscare and location description
         jumpScare.imageJump("src/main/java/openworld/images/house.jpg", 2000);

@@ -20,18 +20,23 @@ public class World {
     private static Player player;
     private static List<Location> locations = new ArrayList<>();
     private static Location forest = new Forest("Forest", "A dark forest filled with unknown dangers.", null);
-    private static Location forestWithAxe = new Forest("Forest", "A dark forest filled with unknown dangers.", Item.AXE);
+    private static Location forestWithAxe = new Forest("Forest", "A dark forest filled with unknown dangers.",
+            Item.AXE);
     private static Location clownHouse = new ClownHouse("Clown Tent", "A creepy tent filled with clowns", null);
-    private static Location clownHouseWithKey = new ClownHouse("Clown Tent", "A creepy tent filled with clowns", Item.KEY);
-    private static Location hauntedHouse = new HauntedHouse("Haunted House", "A creaky house filled with secrets", null);
-    private static Location hauntedHouseWithKnife = new HauntedHouse("Haunted House", "A creaky house filled with secrets", Item.KNIFE);
-    private static Location lockedShed = new LockedShed("Locked Shed", "A very old and grotty looking shed", Item.DEAD_BODY);
+    private static Location clownHouseWithKey = new ClownHouse("Clown Tent", "A creepy tent filled with clowns",
+            Item.KEY);
+    private static Location hauntedHouse = new HauntedHouse("Haunted House", "A creaky house filled with secrets",
+            null);
+    private static Location hauntedHouseWithKnife = new HauntedHouse("Haunted House",
+            "A creaky house filled with secrets", Item.KNIFE);
+    private static Location lockedShed = new LockedShed("Locked Shed", "A very old and grotty looking shed",
+            Item.DEAD_BODY);
     private static Location graveyard = new Graveyard("Graveyard", "A damp foul-smelling graveyard", null);
-    private static Location[][] gridOfLocations = {{graveyard, graveyard, forest, forest, forest},
-                                                    {lockedShed, forest, forest, hauntedHouseWithKnife, hauntedHouse},
-                                                    {forest, forest, forest, forest, forest},
-                                                    {forest, forestWithAxe, clownHouse, forest, forest},
-                                                    {forest, forest, clownHouseWithKey, forest, forest}};
+    private static Location[][] gridOfLocations = { { graveyard, graveyard, forest, forest, forest },
+            { lockedShed, forest, forest, hauntedHouseWithKnife, hauntedHouse },
+            { forest, forest, forest, forest, forest },
+            { forest, forestWithAxe, clownHouse, forest, forest },
+            { forest, forest, clownHouseWithKey, forest, forest } };
     private Clip clip;
 
     public World() {
@@ -59,57 +64,15 @@ public class World {
         String filePath = "src/main/resources/background.wav";
         String filePath2 = "src/main/resources/jumpscare.wav";
 
-        Thread audioThread = new Thread(() -> {
-            try {
-                File audioFile = new File(filePath);
-
-                AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
-
-                Clip clip = AudioSystem.getClip();
-
-                clip.open(audioStream);
-
-                clip.start();
-
-                clip.addLineListener(event -> {
-                    if (event.getType() == LineEvent.Type.STOP) {
-                        clip.close();
-                    }
-                });
-
-                Thread.sleep(clip.getMicrosecondLength() / 1000);
-                audioStream.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        Thread backgroundThread = new Thread(() -> {
+            AudioManager.playAudio(filePath);
         });
 
         Thread jumpscareThread = new Thread(() -> {
-            try {
-
-                File audioFile = new File(filePath2);
-
-                AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
-
-                Clip clip = AudioSystem.getClip();
-
-                clip.open(audioStream);
-
-                clip.start();
-
-                clip.addLineListener(event -> {
-                    if (event.getType() == LineEvent.Type.STOP) {
-                        clip.close();
-                    }
-                });
-                Thread.sleep(clip.getMicrosecondLength() / 1000);
-                audioStream.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            AudioManager.playAudio(filePath2);
         });
 
-        audioThread.start();
+        backgroundThread.start();
 
         Scanner userInput = new Scanner(System.in);
 
@@ -131,7 +94,7 @@ public class World {
 
                     System.out.println("Only Capitalized 'I'. Do not make me mad.");
                 } else {
-                    valid=true;
+                    valid = true;
                 }
             }
         }
@@ -150,9 +113,9 @@ public class World {
             // Print the grid with the current position of the dot
             GameGrid.printGrid(rows, cols, dotRow, dotCol);
 
-            
             // Get user input for moving the dot
-            System.out.print("Move (w - north, s - south, d - east, a - west, q - quit, or i - to view your inventory): ");
+            System.out.print(
+                    "Move (w - north, s - south, d - east, a - west, q - quit, or i - to view your inventory): ");
             if (userInput.hasNextLine()) {
                 char move = userInput.nextLine().toLowerCase().charAt(0);
 
@@ -175,7 +138,7 @@ public class World {
                             dotCol--; // Move left
                         break;
                     case 'i':
-                        System.out.println(player.getInventory().toString());    
+                        System.out.println(player.getInventory().toString());
                         break;
                     case 'q':
                         System.out.println("Quitting the game.");

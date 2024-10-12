@@ -2,11 +2,13 @@ package src.main.java.openworld.Location;
 
 import java.util.Scanner;
 
+import src.main.java.openworld.AudioManager;
 import src.main.java.openworld.Item;
 import src.main.java.openworld.Player.Player;
 
 public class Graveyard extends Location {
     private Item item;
+    private String gravePath = "src/main/resources/graveyard.wav";
 
     public Graveyard(String name, String description, Item item) {
         super(name, description);
@@ -15,6 +17,13 @@ public class Graveyard extends Location {
 
     @Override
     public void enter(Player player) {
+
+        Thread graveThread = new Thread(() -> {
+            AudioManager.playAudio(gravePath);
+        });
+
+        graveThread.start();
+
         System.out.println("You enter the " + getName() + ": " + getDescription());
         if (item != null) {
             String a_or_an = "a ";
