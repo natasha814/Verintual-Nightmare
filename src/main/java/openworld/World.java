@@ -40,7 +40,7 @@ public class World {
     public static void main(String[] args) {
         World world = new World();
 
-        String filePath = "/Users/zetachazapi/Verintual-Nightmare/src/main/resources/test.wav";
+        String filePath = "/Users/zetachazapi/Verintual-Nightmare/src/main/resources/background.wav";
 
         // Create a thread for playing audio
         Thread audioThread = new Thread(() -> {
