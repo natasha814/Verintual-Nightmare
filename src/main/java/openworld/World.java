@@ -42,7 +42,7 @@ public class World {
         JumpScare jumpScare = new JumpScare();
         jumpScare.imageJump("src/main/java/openworld/forest.jpg", 2000);
 
-        String filePath = "src/main/resources/test.wav";
+        String filePath = "src/main/resources/background.wav";
 
         // Create a thread for playing audio
         Thread audioThread = new Thread(() -> {
