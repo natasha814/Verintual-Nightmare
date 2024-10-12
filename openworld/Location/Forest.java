@@ -1,10 +1,9 @@
 package openworld.Location;
 
-import openworld.Player;
 import openworld.Item;
+import openworld.Player.Player;
 
 public class Forest extends Location {
-
     private Item item;
 
     public Forest(String name, String description, Item item) {
@@ -37,6 +36,10 @@ public class Forest extends Location {
     @Override
     public String toString() {
         return getName() + ": " + getDescription();
+    }
+
+    public Item getItem() {
+        return item;
     }
 
 }

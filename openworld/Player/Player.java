@@ -1,18 +1,16 @@
-package openworld;
-import java.util.ArrayList;
-import java.util.List;
+package openworld.Player;
 
 import openworld.Location.Location;
 
 public class Player {
     private String name;
     private Location currentLocation;
-    private List<Item> inventory;
+    private Inventory inventory;
 
     public Player(String name, Location currentLocation) {
         this.name = name;
         this.currentLocation = currentLocation;
-        this.inventory = new ArrayList<Item>();
+        this.inventory = new Inventory();
     }
 
     public void moveTo(Location newLocation) {
@@ -20,9 +18,12 @@ public class Player {
         currentLocation.enter(this);
     }
 
-    public void addItem(Item item) {
-        inventory.add(item);
-        System.out.println("You've picked up: " + item);
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public String getName() {
+        return name;
     }
 
 }

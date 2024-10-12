@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import openworld.Location.Location;
+import openworld.Player.Player;
 import openworld.Location.Forest;
 import openworld.Location.ClownHouse;
 
@@ -17,7 +18,7 @@ public class World {
 
     // Initialize locations
     private void initializeWorld(Scanner userInput) {
-        Location clownHouse = new ClownHouse("Clown House", "A creepy house filled with clowns.");
+        Location clownHouse = new ClownHouse("Clown House", "A creepy house filled with clowns.", Item.KEY);
         Location forest = new Forest("Forest", "A dark forest filled with unknown dangers.", Item.AXE);
         locations.add(clownHouse);
         locations.add(forest);
