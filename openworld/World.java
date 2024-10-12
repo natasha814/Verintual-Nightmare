@@ -37,7 +37,8 @@ public class World {
 
         char info = userInput.nextLine().charAt(0);
         if (info == 'I') {
-            System.out.println("Clown House: " + clownHouse.getDescription());
+            System.out.println("Clown House: get description ");
+            System.out.println("Forest: get description ");
             System.out.println("You have two paths. Choose wisely.");
         } else {
             System.out.println("Only Capitalized 'I'. Do not make me mad.");
