@@ -107,6 +107,14 @@ public class Inventory {
     }
 
 
+    public boolean searchForItem(Item item) {
+        if (slots.contains(item)) {
+            return true;
+        }
+        return false;
+    }
+
+
 
 
     public ArrayList<Item> getInventory() {
@@ -118,7 +126,7 @@ public class Inventory {
         return slots.get(index);
     }
 
-    
+
     private boolean checkFirstLetterVowel(Item item) {
         String itemString = item.name();
         char lower_char = Character.toLowerCase(itemString.charAt(0));

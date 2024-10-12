@@ -1,5 +1,7 @@
 package openworld.Location;
 
+import java.util.Scanner;
+
 import openworld.Item;
 import openworld.Player.Player;
 
@@ -20,8 +22,14 @@ public class ClownHouse extends Location {
                 a_or_an = "an ";
             }
             System.out.println("You see " + a_or_an + item.name().toLowerCase() + " here.");
+            Scanner userIn = new Scanner(System.in);
+                System.out.println("Would you like to pick it up? [Y/N]");
+                char info = userIn.nextLine().toLowerCase().charAt(0);
+                if (info == 'y') {
+                    player.getInventory().addItem(item);
+                }
+                userIn.close();
         }
-        // will add code to pick up item etc
     }
 
     private boolean checkFirstLetterVowel(Item item) {
