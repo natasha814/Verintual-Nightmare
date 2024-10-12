@@ -48,7 +48,7 @@ public class World {
         String userName = userInput.nextLine();
         System.out.println("Username is: " + userName);
 
-        player = new Player(userName, hauntedHouse);
+        player = new Player(userName);
     }
 
     public static void main(String[] args) {
@@ -139,20 +139,18 @@ public class World {
         // Move on to the game grid after location selection
         int rows = 5, cols = 5;
         int dotRow = 2, dotCol = 2; // Initial position of the dot (center of the grid)
+        Location prevLocation = null;
 
         while (true) {
             Location currentLocation = gridOfLocations[dotRow][dotCol];
-            currentLocation.enter(player);
+            if (currentLocation != prevLocation) {
+                currentLocation.enter(player);
+            }
+            prevLocation = currentLocation;
             // Print the grid with the current position of the dot
             GameGrid.printGrid(rows, cols, dotRow, dotCol);
 
-            // Add a small delay between grid prints to slow down the loop
-            try {
-                Thread.sleep(500); // 500 milliseconds (0.5 seconds) delay
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
+            
             // Get user input for moving the dot
             System.out.print("Move (w - north, s - south, d - east, a - west, q - quit, or i - to view your inventory): ");
             if (userInput.hasNextLine()) {

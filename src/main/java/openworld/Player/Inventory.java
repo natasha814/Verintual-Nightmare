@@ -79,7 +79,6 @@ public class Inventory {
             System.out.println("You have removed the " + item.name().toLowerCase());
         }
 
-        userIn.close();
     }
 
     public void addItem(Item item) {
@@ -96,11 +95,10 @@ public class Inventory {
             if (info == 'y') {
                 removeItem();
                 addItem(item);
-                int itemIndex = slots.indexOf(item);
+                int itemIndex = slots.indexOf(item)+1;
                 System.out.println(
-                        item.name().toLowerCase() + " has been added to your inventory in slot " + itemIndex + 1);
+                        item.name().toLowerCase() + " has been added to your inventory in slot " + (int) itemIndex);
             }
-            userIn.close();
 
         }
     }

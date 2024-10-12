@@ -16,37 +16,37 @@ public class Forest extends Location {
         this.item = item;
     }
 
-    String forestPath = "src/main/resources/forest.wav";
+    // String forestPath = "src/main/resources/forest.wav";
 
-    Thread forestThread = new Thread(() -> {
-        try {
+    // Thread forestThread = new Thread(() -> {
+    //     try {
 
-            File audioFile = new File(forestPath);
+    //         File audioFile = new File(forestPath);
 
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+    //         AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
 
-            Clip clip = AudioSystem.getClip();
+    //         Clip clip = AudioSystem.getClip();
 
-            clip.open(audioStream);
+    //         clip.open(audioStream);
 
-            clip.start();
+    //         clip.start();
 
-            clip.addLineListener(event -> {
-                if (event.getType() == LineEvent.Type.STOP) {
-                    clip.close();
-                }
-            });
-            Thread.sleep(clip.getMicrosecondLength() / 1000);
-            audioStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    });
+    //         clip.addLineListener(event -> {
+    //             if (event.getType() == LineEvent.Type.STOP) {
+    //                 clip.close();
+    //             }
+    //         });
+    //         Thread.sleep(clip.getMicrosecondLength() / 1000);
+    //         audioStream.close();
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    // });
 
     @Override
     public void enter(Player player) {
 
-        forestThread.start();
+        // forestThread.start();
         
         System.out.println("You enter the " + getName() + ": " + getDescription());
 
