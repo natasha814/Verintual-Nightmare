@@ -42,32 +42,24 @@ public class World {
         String filePath = "src/main/resources/background.wav";
         String filePath2 = "src/main/resources/jumpscare.wav";
 
-        // Create a thread for playing audio
         Thread audioThread = new Thread(() -> {
             try {
-                // Create a File object
                 File audioFile = new File(filePath);
 
-                // Get audio input stream
                 AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
 
-                // Get a clip resource
                 Clip clip = AudioSystem.getClip();
 
-                // Open audio clip and load samples from the audio input stream
                 clip.open(audioStream);
 
-                // Start playing the audio
                 clip.start();
 
-                // Keep the thread alive until the audio finishes playing
                 clip.addLineListener(event -> {
                     if (event.getType() == LineEvent.Type.STOP) {
                         clip.close();
                     }
                 });
 
-                // Sleep for the duration of the clip
                 Thread.sleep(clip.getMicrosecondLength() / 1000);
                 audioStream.close();
             } catch (Exception e) {
@@ -77,29 +69,22 @@ public class World {
 
         Thread jumpscareThread = new Thread(() -> {
             try {
-                // Create a File object
+
                 File audioFile = new File(filePath2);
 
-                // Get audio input stream
                 AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
 
-                // Get a clip resource
                 Clip clip = AudioSystem.getClip();
 
-                // Open audio clip and load samples from the audio input stream
                 clip.open(audioStream);
 
-                // Start playing the audio
                 clip.start();
 
-                // Keep the thread alive until the audio finishes playing
                 clip.addLineListener(event -> {
                     if (event.getType() == LineEvent.Type.STOP) {
                         clip.close();
                     }
                 });
-
-                // Sleep for the duration of the clip
                 Thread.sleep(clip.getMicrosecondLength() / 1000);
                 audioStream.close();
             } catch (Exception e) {
@@ -107,13 +92,10 @@ public class World {
             }
         });
 
-        // Start the audio thread
         audioThread.start();
 
-        // Using one Scanner for the entire program
         Scanner userInput = new Scanner(System.in);
 
-        // Initialize the world
         world.initializeWorld(userInput);
 
         System.out.println(
