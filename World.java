@@ -15,7 +15,7 @@ public class World {
 
     }
 
-    private void initializelocations() {
+    private void initializeLocations() {
         Location clownHouse = new Clown_House("Clown House", "wkufjidhfhwf");
         Location forest = new Forest("Forest", "wkufjidhfhwf", "axe");
     }

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import Location.Location;
 
 public class Player {
     private String name;
@@ -14,7 +15,7 @@ public class Player {
 
     public void moveTo(Location newLocation){
         currentLocation = newLocation;
-        cuurentLocation.enter(newLocation);
+        currentLocation.enter(this);
     }
 
     public void addItem(Item item){
