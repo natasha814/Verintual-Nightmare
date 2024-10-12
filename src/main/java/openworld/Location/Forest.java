@@ -30,7 +30,6 @@ public class Forest extends Location {
                 if (info == 'y') {
                     player.getInventory().addItem(item);
                 }
-                userIn.close();
             }
         } else {
             System.out.println("It is too dark to see anything here, a torch would be handy");

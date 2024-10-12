@@ -28,7 +28,6 @@ public class ClownHouse extends Location {
             if (info == 'y') {
                 player.getInventory().addItem(item);
             }
-            userIn.close();
         }
     }
 

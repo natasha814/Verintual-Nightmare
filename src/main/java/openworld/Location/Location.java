@@ -26,3 +26,4 @@ public abstract class Location {
     public abstract void enter(Player player);
 
 }
+
