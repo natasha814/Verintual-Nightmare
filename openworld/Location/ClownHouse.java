@@ -13,4 +13,8 @@ public class ClownHouse extends Location {
         System.out.println("You enter the " + getName() + ": " + getDescription());
     }
 
+    @Override
+    public String toString() {
+        return getName() + ": " + getDescription();
+    }
 }
