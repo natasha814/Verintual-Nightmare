@@ -1,4 +1,6 @@
-package Location;
+package openworld.Location;
+
+import openworld.Player;
 
 public class ClownHouse extends Location{
 
