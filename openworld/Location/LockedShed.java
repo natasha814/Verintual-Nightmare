@@ -5,37 +5,41 @@ import java.util.Scanner;
 import openworld.Item;
 import openworld.Player.Player;
 
-public class Forest extends Location {
+public class LockedShed extends Location {
     private Item item;
 
-    public Forest(String name, String description, Item item) {
+    public LockedShed(String name, String description, Item item) {
         super(name, description);
         this.item = item;
+    }
+
+    public void tryToEnter(Player player) {
+        if (player.getInventory().searchForItem(Item.KEY)) {
+            System.out.println("You unlock the shed door, welcome inside...");
+            enter(player);
+        } else {
+            System.out.println("You don't have the key. Better luck next time.");
+        }
+
     }
 
     @Override
     public void enter(Player player) {
         System.out.println("You enter the " + getName() + ": " + getDescription());
-
-        if (player.getInventory().searchForItem(Item.TORCH)) {
-            if (item != null) {
-                String a_or_an = "a ";
-                if (checkFirstLetterVowel(item)) {
-                    a_or_an = "an ";
-                }
-                System.out.println("You see " + a_or_an + item.name().toLowerCase() + " here.");
-                Scanner userIn = new Scanner(System.in);
+        if (item != null) {
+            String a_or_an = "a ";
+            if (checkFirstLetterVowel(item)) {
+                a_or_an = "an ";
+            }
+            System.out.println("You see " + a_or_an + item.name().toLowerCase() + " here.");
+            Scanner userIn = new Scanner(System.in);
                 System.out.println("Would you like to pick it up? [Y/N]");
                 char info = userIn.nextLine().toLowerCase().charAt(0);
                 if (info == 'y') {
                     player.getInventory().addItem(item);
                 }
                 userIn.close();
-            }
-        } else {
-            System.out.println("It is too dark to see anything here, a torch would be handy");
         }
-
     }
 
     private boolean checkFirstLetterVowel(Item item) {
@@ -55,5 +59,5 @@ public class Forest extends Location {
     public Item getItem() {
         return item;
     }
-
+    
 }

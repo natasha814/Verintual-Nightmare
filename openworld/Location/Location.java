@@ -1,6 +1,6 @@
 package openworld.Location;
 
-import openworld.Player;
+import openworld.Player.Player;
 
 public abstract class Location {
 
