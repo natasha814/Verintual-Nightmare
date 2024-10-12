@@ -2,6 +2,7 @@ package src.main.java.openworld;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import javax.sound.sampled.*;
@@ -37,7 +38,6 @@ public class World {
             { forest, forest, forest, forest, forest },
             { forest, forestWithAxe, clownHouse, forest, forest },
             { forest, forest, clownHouseWithKey, forest, forest } };
-    private Clip clip;
 
     public World() {
     }
@@ -61,18 +61,54 @@ public class World {
         JumpScare jumpScare = new JumpScare();
         jumpScare.imageJump("src/main/java/openworld/forest.jpg", 2000);
 
-        String filePath = "src/main/resources/background.wav";
-        String filePath2 = "src/main/resources/jumpscare.wav";
+        String background = "src/main/resources/background.wav";
+        String scream = "src/main/resources/jumpscare.wav";
+        String jumpscareRand = "src/main/resources/randomScare.wav";
 
         Thread backgroundThread = new Thread(() -> {
-            AudioManager.playAudio(filePath);
+            AudioManager.playAudio(background);
         });
 
         Thread jumpscareThread = new Thread(() -> {
-            AudioManager.playAudio(filePath2);
+            AudioManager.playAudio(scream);
+        });
+
+        Thread jumpscareRandomThread = new Thread(() -> {
+            Random random = new Random();
+            while (true) {
+                try {
+                    int randomInterval = 10000 + random.nextInt(4000);
+
+                    Thread.sleep(randomInterval);
+
+                    File audioFile = new File(jumpscareRand);
+                    AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+                    Clip clip = AudioSystem.getClip();
+                    clip.open(audioStream);
+                    clip.start();
+
+                    // Add a listener to close the clip when finished
+                    clip.addLineListener(event -> {
+                        if (event.getType() == LineEvent.Type.STOP) {
+                            clip.close();
+                        }
+                    });
+
+                    // Wait for the audio to finish playing
+                    while (clip.isRunning()) {
+                        Thread.sleep(100); // Check every 100 ms if the clip is still running
+                    }
+
+                    audioStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         });
 
         backgroundThread.start();
+
+        jumpscareRandomThread.start();
 
         Scanner userInput = new Scanner(System.in);
 
