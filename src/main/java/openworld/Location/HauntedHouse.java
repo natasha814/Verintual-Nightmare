@@ -1,8 +1,10 @@
 package src.main.java.openworld.Location;
 
 import java.util.Scanner;
+import java.util.random.RandomGenerator.JumpableGenerator;
 
 import src.main.java.openworld.Item;
+import src.main.java.openworld.JumpScare;
 import src.main.java.openworld.Player.Player;
 
 import java.io.File;
@@ -45,7 +47,9 @@ public class HauntedHouse extends Location {
 
     @Override
     public void enter(Player player) {
+        JumpScare jumpScare = new JumpScare();
         huantedThread.start();
+        jumpScare.imageJump("src/main/java/openworld/images/house.jpg", 1000);
         System.out.println("You enter the " + getName() + ": " + getDescription());
         if (item != null) {
             String a_or_an = "a ";
