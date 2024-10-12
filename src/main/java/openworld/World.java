@@ -97,7 +97,7 @@ public class World {
             if (userInput.hasNextLine()) {
                 char info = userInput.nextLine().charAt(0);
                 if (info != 'I') {
-                    jumpScare.imageJump("openworld/scary1.png", 500);
+                    jumpScare.imageJump("src/main/java/openworld/scary2.png", 500);
                     System.out.println("Only Capitalized 'I'. Do not make me mad.");
                 } else {
                     valid = true;
