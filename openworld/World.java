@@ -42,23 +42,44 @@ public class World {
         System.out.println(
                 "Time for you to choose your fate. Do not be too quick to choose. Press 'I' for more information: ");
 
-        char info = userInput.nextLine().charAt(0);
+        Boolean valid = false;
+        Boolean valid2 = false;
 
-        if (info != 'I') {
-            System.out.println("Only Capitalized 'I'. Do not make me mad.");
-        } else {
-            System.out.println(testLocation.toString());
-            System.out.println("You have two paths. Choose wisely.");
-            System.out.println("Ready? Enter 'C' for Clown House or 'F' for Forest.");
-            char choice = userInput.nextLine().charAt(0);
-
-            if (choice == 'C') {
-                world.player.moveTo(world.locations.get(0));
-            } else if (choice == 'F') {
-                world.player.moveTo(world.locations.get(1));
+        while (valid != true) {
+            char info = userInput.nextLine().charAt(0);
+            if (info != 'I') {
+                System.out.println("Only Capitalized 'I'. Do not make me mad.");
             } else {
-                System.out.println("Invalid choice. Please enter 'C' or 'F'.");
+                valid = true;
+                System.out.println("You have two paths. Choose wisely.");
+                // storing location info
+                Location location1 = locations.get(0);
+                Location location2 = locations.get(1);
+                char loc1FirstChar = location1.getName().charAt(0);
+                char loc2FirstChar = location2.getName().charAt(0);
+                System.out.println(location1.toString());
+                System.out.println("or");
+                System.out.println(location2.toString());
+                System.out.println("Ready? Enter '" + loc1FirstChar + "' for " + location1.getName() + " or '"
+                        + loc2FirstChar + "' for " + location2.getName());
+
+                while (valid2 != true) {
+                    char choice = userInput.nextLine().charAt(0);
+                    if (choice != loc1FirstChar && choice != loc2FirstChar) {
+                        System.out.println(
+                                "Invalid choice. Please enter '" + loc1FirstChar + "' or '" + loc2FirstChar + "'.");
+                    } else if (choice == loc1FirstChar) {
+                        valid2 = true;
+                        world.player.moveTo(location1);
+                    } else if (choice == loc2FirstChar) {
+                        valid2 = true;
+                        world.player.moveTo(location2);
+                    }
+
+                }
+
             }
+
         }
 
         userInput.close();

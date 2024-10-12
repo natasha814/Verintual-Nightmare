@@ -20,7 +20,7 @@ public class Forest extends Location {
             if (checkFirstLetterVowel(item)) {
                 a_or_an = "an ";
             }
-            System.out.println("You see " + a_or_an + item + " here.");
+            System.out.println("You see " + a_or_an + item.name().toLowerCase() + " here.");
         }
         // will add code to pick up item etc
     }
