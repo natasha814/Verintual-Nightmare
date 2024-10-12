@@ -8,6 +8,7 @@ import javax.sound.sampled.*;
 
 import src.main.java.openworld.Location.ClownHouse;
 import src.main.java.openworld.Location.Forest;
+import src.main.java.openworld.Location.HauntedHouse;
 import src.main.java.openworld.Location.Location;
 import src.main.java.openworld.Player.Player;
 
@@ -16,7 +17,7 @@ import java.net.URL;
 import java.io.File;
 
 public class World {
-    private Player player;
+    private static Player player;
     private static List<Location> locations = new ArrayList<>();
     private URL url;
     private Clip clip;
@@ -25,16 +26,16 @@ public class World {
     }
 
     private void initializeWorld(Scanner userInput) {
-        Location clownHouse = new ClownHouse("Clown House", "A creepy house filled with clowns.", Item.KEY);
+        Location hauntedHouse = new HauntedHouse("Haunted House", "A creepy house filled with spiders.", Item.KEY);
         Location forest = new Forest("Forest", "A dark forest filled with unknown dangers.", Item.AXE);
-        locations.add(clownHouse);
+        locations.add(hauntedHouse);
         locations.add(forest);
 
         System.out.println("Enter username:");
         String userName = userInput.nextLine();
         System.out.println("Username is: " + userName);
 
-        player = new Player(userName, forest);
+        player = new Player(userName, hauntedHouse);
     }
 
     public static void main(String[] args) {
@@ -97,7 +98,7 @@ public class World {
             if (userInput.hasNextLine()) {
                 char info = userInput.nextLine().charAt(0);
                 if (info != 'I') {
-                    jumpScare.imageJump("openworld/scary1.png", 500);
+                    jumpScare.imageJump("src/main/java/openworld/scary1.png", 500);
                     System.out.println("Only Capitalized 'I'. Do not make me mad.");
                 } else {
                     valid = true;
@@ -125,9 +126,11 @@ public class World {
                             } else {
                                 valid2 = true;
                                 if (choice == loc1FirstChar) {
-                                    world.player.moveTo(location1);
+                                    location1.enter(player);
+                                    // world.player.moveTo(location1);
                                 } else {
-                                    world.player.moveTo(location2);
+                                    location2.enter(player);
+                                    // world.player.moveTo(location2);
                                 }
                             }
                         }

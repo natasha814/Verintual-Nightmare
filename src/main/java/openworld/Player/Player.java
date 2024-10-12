@@ -14,6 +14,7 @@ public class Player {
     }
 
     public void moveTo(Location newLocation) {
+        newLocation.enter(this);
         currentLocation = newLocation;
         currentLocation.enter(this);
     }
