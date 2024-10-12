@@ -33,24 +33,28 @@ public class HauntedHouse extends Location {
         jumpScare.imageJump("src/main/java/openworld/images/house.jpg", 2000);
         System.out.println("You enter the " + getName() + ": " + getDescription());
 
-        if (item != null) {
-            String a_or_an = checkFirstLetterVowel(item) ? "an " : "a ";
-            System.out.println("You see " + a_or_an + item.name().toLowerCase() + " here.");
-
-            Scanner userIn = new Scanner(System.in);
-            System.out.println("Would you like to pick it up? [Y/N]");
-            char info = userIn.nextLine().toLowerCase().charAt(0);
-
-            if (info == 'y') {
-                player.getInventory().addItem(item);
-            }
-        }
-
         // Display the jumpscare and location description
         jumpScare.imageJump("src/main/java/openworld/images/house.jpg", 2000);
         System.out.println("You enter the " + getName() + ": " + getDescription());
 
-        if (item != null) {
+        itemOptions(player);
+        
+    }
+
+    @Override
+    public void itemOptions(Player player) {
+        if (item == Item.DEAD_BODY) {
+            System.out.println("You can smell something awful in here");
+            System.out.println("...");
+            System.out.println("You see something in the corner");
+            System.out.println("Is that a dead body?");
+            Scanner userInput = new Scanner(System.in);
+            System.out.println("Do you want a closer look? [Y/N]");
+            char info = userInput.nextLine().toLowerCase().charAt(0);
+            if (info == 'y') {
+                // YOURE GETTING CHASED AAAAAAA
+            }
+        } else if (item != null) {
             String a_or_an = checkFirstLetterVowel(item) ? "an " : "a ";
             System.out.println("You see " + a_or_an + item.name().toLowerCase() + " here.");
 
@@ -78,6 +82,7 @@ public class HauntedHouse extends Location {
         return getName() + ": " + getDescription();
     }
 
+    @Override
     public Item getItem() {
         return item;
     }

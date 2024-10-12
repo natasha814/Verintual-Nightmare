@@ -1,5 +1,6 @@
 package src.main.java.openworld.Location;
 
+import src.main.java.openworld.Item;
 import src.main.java.openworld.Player.Player;
 
 public abstract class Location {
@@ -29,5 +30,8 @@ public abstract class Location {
 
     public abstract void enter(Player player);
 
+    public abstract void itemOptions(Player player);
+
+    public abstract Item getItem();
 }
 

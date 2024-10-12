@@ -33,24 +33,23 @@ public class ClownHouse extends Location {
         jumpScare.imageJump("src/main/java/openworld/images/tent.jpg", 1000);
         System.out.println("You enter the " + getName() + ": " + getDescription());
 
-        if (item != null) {
-            String a_or_an = checkFirstLetterVowel(item) ? "an " : "a ";
-            System.out.println("You see " + a_or_an + item.name().toLowerCase() + " here.");
+        itemOptions(player);
+    }
 
-            Scanner userIn = new Scanner(System.in);
-            System.out.println("Would you like to pick it up? [Y/N]");
-            char info = userIn.nextLine().toLowerCase().charAt(0);
-
+    @Override
+    public void itemOptions(Player player) {
+        if (item == Item.DEAD_BODY) {
+            System.out.println("You can smell something awful in here");
+            System.out.println("...");
+            System.out.println("You see something in the corner");
+            System.out.println("Is that a dead body?");
+            Scanner userInput = new Scanner(System.in);
+            System.out.println("Do you want a closer look? [Y/N]");
+            char info = userInput.nextLine().toLowerCase().charAt(0);
             if (info == 'y') {
-                player.getInventory().addItem(item);
+                // YOURE GETTING CHASED AAAAAAA
             }
-        }
-
-        // Display the jumpscare and location description
-        jumpScare.imageJump("src/main/java/openworld/images/tent.jpg", 1000);
-        System.out.println("You enter the " + getName() + ": " + getDescription());
-
-        if (item != null) {
+        } else if (item != null) {
             String a_or_an = checkFirstLetterVowel(item) ? "an " : "a ";
             System.out.println("You see " + a_or_an + item.name().toLowerCase() + " here.");
 
@@ -63,6 +62,7 @@ public class ClownHouse extends Location {
             }
         }
     }
+
 
     private boolean checkFirstLetterVowel(Item item) {
         char lower_char = Character.toLowerCase(item.name().charAt(0));
@@ -74,6 +74,7 @@ public class ClownHouse extends Location {
         return getName() + ": " + getDescription();
     }
 
+    @Override
     public Item getItem() {
         return item;
     }

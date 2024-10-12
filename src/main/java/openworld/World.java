@@ -20,23 +20,18 @@ public class World {
     private static Player player;
     private static List<Location> locations = new ArrayList<>();
     private static Location forest = new Forest("Forest", "A dark forest filled with unknown dangers.", null);
-    private static Location forestWithAxe = new Forest("Forest", "A dark forest filled with unknown dangers.",
-            Item.AXE);
+    private static Location forestWithAxe = new Forest("Forest", "A dark forest filled with unknown dangers.", Item.AXE);
     private static Location clownHouse = new ClownHouse("Clown Tent", "A creepy tent filled with clowns", null);
-    private static Location clownHouseWithKey = new ClownHouse("Clown Tent", "A creepy tent filled with clowns",
-            Item.KEY);
-    private static Location hauntedHouse = new HauntedHouse("Haunted House", "A creaky house filled with secrets",
-            null);
-    private static Location hauntedHouseWithKnife = new HauntedHouse("Haunted House",
-            "A creaky house filled with secrets", Item.KNIFE);
-    private static Location lockedShed = new LockedShed("Locked Shed", "A very old and grotty looking shed",
-            Item.DEAD_BODY);
+    private static Location clownHouseWithKey = new ClownHouse("Clown Tent", "A creepy tent filled with clowns", Item.KEY);
+    private static Location hauntedHouse = new HauntedHouse("Haunted House", "A creaky house filled with secrets",null);
+    private static Location hauntedHouseWithKnife = new HauntedHouse("Haunted House","A creaky house filled with secrets", Item.KNIFE);
+    private static Location lockedShed = new LockedShed("Locked Shed", "A very old and grotty looking shed",Item.DEAD_BODY);
     private static Location graveyard = new Graveyard("Graveyard", "A damp foul-smelling graveyard", null);
     private static Location[][] gridOfLocations = { { graveyard, graveyard, forest, forest, forest },
-            { lockedShed, forest, forest, hauntedHouseWithKnife, hauntedHouse },
-            { forest, forest, forest, forest, forest },
-            { forest, forestWithAxe, clownHouse, forest, forest },
-            { forest, forest, clownHouseWithKey, forest, forest } };
+                                                    { lockedShed, forest, forest, hauntedHouseWithKnife, hauntedHouse },
+                                                    { forest, forest, forest, forest, forest },
+                                                    { forest, forestWithAxe, clownHouse, forest, forest },
+                                                    { forest, forest, clownHouseWithKey, forest, forest } };
     private Clip clip;
 
     public World() {
@@ -106,8 +101,12 @@ public class World {
 
         while (true) {
             Location currentLocation = gridOfLocations[dotRow][dotCol];
-            if (currentLocation != prevLocation) {
+            if (prevLocation == null || currentLocation.getName() != prevLocation.getName()) {
                 currentLocation.enter(player);
+            } else if (currentLocation != prevLocation) {
+                if (currentLocation.getItem() != null) {
+                    
+                }
             }
             prevLocation = currentLocation;
             // Print the grid with the current position of the dot

@@ -25,7 +25,24 @@ public class Graveyard extends Location {
         graveThread.start();
 
         System.out.println("You enter the " + getName() + ": " + getDescription());
-        if (item != null) {
+        
+        itemOptions(player);
+    }
+
+    @Override
+    public void itemOptions(Player player) {
+        if (item == Item.DEAD_BODY) {
+            System.out.println("You can smell something awful in here");
+            System.out.println("...");
+            System.out.println("You see something in the corner");
+            System.out.println("Is that a dead body?");
+            Scanner userInput = new Scanner(System.in);
+            System.out.println("Do you want a closer look? [Y/N]");
+            char info = userInput.nextLine().toLowerCase().charAt(0);
+            if (info == 'y') {
+                // YOURE GETTING CHASED AAAAAAA
+            }
+        } else if (item != null) {
             String a_or_an = "a ";
             if (checkFirstLetterVowel(item)) {
                 a_or_an = "an ";
@@ -54,6 +71,7 @@ public class Graveyard extends Location {
         return getName() + ": " + getDescription();
     }
 
+    @Override
     public Item getItem() {
         return item;
     }
