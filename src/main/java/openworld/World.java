@@ -147,6 +147,13 @@ public class World {
             // Print the grid with the current position of the dot
             GameGrid.printGrid(rows, cols, dotRow, dotCol);
 
+            // Add a small delay between grid prints to slow down the loop
+            try {
+                Thread.sleep(500); // 500 milliseconds (0.5 seconds) delay
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            
             // Get user input for moving the dot
             System.out.print("Move (w - north, s - south, d - east, a - west, q - quit): ");
             if (userInput.hasNextLine()) {

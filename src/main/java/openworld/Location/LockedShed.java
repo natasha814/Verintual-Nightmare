@@ -38,7 +38,6 @@ public class LockedShed extends Location {
             if (info == 'y') {
                 player.getInventory().addItem(item);
             }
-            userIn.close();
         }
     }
 
