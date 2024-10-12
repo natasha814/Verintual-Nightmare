@@ -17,7 +17,7 @@ public class World {
     private static List<Location> locations = new ArrayList<>();
 
     public World() {
-
+       
     }
 
     private void initializeWorld(Scanner userInput) {
@@ -35,31 +35,9 @@ public class World {
 
     public static void main(String[] args) {
         World world = new World();
-
-        new Thread(() -> {
-            try {
-                // Load the sound file
-                File musicFile = new File("/Users/zetachazapi/Verintual-Nightmare/openworld/defaultMusic.wav"); // Adjust the path if necessary
-                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(musicFile);
-                Clip clip = AudioSystem.getClip();
-                clip.open(audioInputStream);
-                clip.start(); // Play the music
-                clip.loop(Clip.LOOP_CONTINUOUSLY); // Loop the music indefinitely
-
-                // Ensure the clip remains open while the program runs
-                Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                    clip.stop();
-                    clip.close();
-                }));
-            } catch (UnsupportedAudioFileException e) {
-                System.err.println("The specified audio file is unsupported: " + e.getMessage());
-            } catch (IOException e) {
-                System.err.println("An I/O error occurred: " + e.getMessage());
-            } catch (LineUnavailableException e) {
-                System.err.println("Audio line for playing back the audio is unavailable: " + e.getMessage());
-            }
-        }).start();
-
+        JumpScare jumpScare = new JumpScare();
+        jumpScare.imageJump("openworld/forest.jpg", 2000);
+      
         // Using one Scanner for the entire program
         Scanner userInput = new Scanner(System.in);
 
@@ -77,6 +55,7 @@ public class World {
             if (userInput.hasNextLine()) {
                 char info = userInput.nextLine().charAt(0);
                 if (info != 'I') {
+                    jumpScare.imageJump("openworld/scary1.png", 500);
                     System.out.println("Only Capitalized 'I'. Do not make me mad.");
                 } else {
                     valid = true;
