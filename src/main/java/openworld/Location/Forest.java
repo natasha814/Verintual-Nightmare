@@ -47,7 +47,7 @@ public class Forest extends Location {
     public void enter(Player player) {
 
         forestThread.start();
-
+        
         System.out.println("You enter the " + getName() + ": " + getDescription());
 
         if (player.getInventory().searchForItem(Item.TORCH)) {

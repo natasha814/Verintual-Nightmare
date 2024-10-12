@@ -49,7 +49,7 @@ public class HauntedHouse extends Location {
     public void enter(Player player) {
         JumpScare jumpScare = new JumpScare();
         huantedThread.start();
-        jumpScare.imageJump("src/main/java/openworld/images/house.jpg", 1000);
+        jumpScare.imageJump("src/main/java/openworld/images/house.jpg", 2000);
         System.out.println("You enter the " + getName() + ": " + getDescription());
         if (item != null) {
             String a_or_an = "a ";
