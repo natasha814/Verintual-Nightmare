@@ -141,9 +141,9 @@ public class World {
                         System.out.println(player.getInventory().toString());
                         break;
                     case 'q':
+                        jumpscareThread.start();
                         System.out.println("Quitting the game.");
-                        userInput.close();
-                        return; // Exit the program
+                        System.exit(0); // Exit the program
                     default:
                         System.out.println("Invalid input! Use w, a, s, d, or q.");
                 }
