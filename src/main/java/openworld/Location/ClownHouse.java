@@ -15,6 +15,7 @@ public class ClownHouse extends Location {
 
     @Override
     public void enter(Player player) {
+
         System.out.println("You enter the " + getName() + ": " + getDescription());
         if (item != null) {
             String a_or_an = "a ";

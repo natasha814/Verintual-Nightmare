@@ -12,15 +12,11 @@ import src.main.java.openworld.Location.HauntedHouse;
 import src.main.java.openworld.Location.Location;
 import src.main.java.openworld.Player.Player;
 
-import java.io.IOException;
-import java.net.URL;
 import java.io.File;
 
 public class World {
     private static Player player;
     private static List<Location> locations = new ArrayList<>();
-    private URL url;
-    private Clip clip;
 
     public World() {
     }
@@ -44,12 +40,45 @@ public class World {
         jumpScare.imageJump("src/main/java/openworld/forest.jpg", 2000);
 
         String filePath = "src/main/resources/background.wav";
+        String filePath2 = "src/main/resources/jumpscare.wav";
 
         // Create a thread for playing audio
         Thread audioThread = new Thread(() -> {
             try {
                 // Create a File object
                 File audioFile = new File(filePath);
+
+                // Get audio input stream
+                AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+
+                // Get a clip resource
+                Clip clip = AudioSystem.getClip();
+
+                // Open audio clip and load samples from the audio input stream
+                clip.open(audioStream);
+
+                // Start playing the audio
+                clip.start();
+
+                // Keep the thread alive until the audio finishes playing
+                clip.addLineListener(event -> {
+                    if (event.getType() == LineEvent.Type.STOP) {
+                        clip.close();
+                    }
+                });
+
+                // Sleep for the duration of the clip
+                Thread.sleep(clip.getMicrosecondLength() / 1000);
+                audioStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        Thread jumpscareThread = new Thread(() -> {
+            try {
+                // Create a File object
+                File audioFile = new File(filePath2);
 
                 // Get audio input stream
                 AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
@@ -99,6 +128,8 @@ public class World {
                 char info = userInput.nextLine().charAt(0);
                 if (info != 'I') {
                     jumpScare.imageJump("src/main/java/openworld/scary1.png", 500);
+                    jumpscareThread.start();
+
                     System.out.println("Only Capitalized 'I'. Do not make me mad.");
                 } else {
                     valid = true;
@@ -153,7 +184,7 @@ public class World {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            
+
             // Get user input for moving the dot
             System.out.print("Move (w - north, s - south, d - east, a - west, q - quit): ");
             if (userInput.hasNextLine()) {
