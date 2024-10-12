@@ -32,7 +32,6 @@ public class World {
                                                     {forest, forest, forest, forest, forest},
                                                     {forest, forestWithAxe, clownHouse, forest, forest},
                                                     {forest, forest, clownHouseWithKey, forest, forest}};
-    private URL url;
     private Clip clip;
 
     public World() {
