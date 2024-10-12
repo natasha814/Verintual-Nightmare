@@ -9,11 +9,10 @@ public class Inventory {
 
     private ArrayList<Item> slots;
 
-    public Inventory() {
+    public Inventory(Item item1, Item item2) {
         slots = new ArrayList<Item>(2);
-        for (int i=0; i<2; i++) {
-            slots.add(null);
-        }
+        slots.add(0, item1);
+        slots.add(1, item2);
     }
 
     public void useItem(int index) {
@@ -128,6 +127,31 @@ public class Inventory {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        String resultString = "";
+
+        Item item1 = slots.get(0);
+        Item item2 = slots.get(1);
+        if (item1 != null) {
+            String a_or_an = "a ";
+            if (checkFirstLetterVowel(slots.get(0))) {
+                a_or_an = "an ";
+            }
+            resultString += "You have "+a_or_an+item1+" in slot 1 and ";
+        } else 
+            resultString += "You have nothign in slot 1 and ";
+        if (item2 != null) {
+            String a_or_an = "a ";
+            if (checkFirstLetterVowel(slots.get(0))) {
+                a_or_an = "an ";
+            }
+            resultString += "you have "+a_or_an+item2+" in slot 2.";
+        } else  
+            resultString += "you have nothing in slot 2.";
+        return resultString;
     }
 
 }

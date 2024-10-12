@@ -1,5 +1,6 @@
 package src.main.java.openworld.Player;
 
+import src.main.java.openworld.Item;
 import src.main.java.openworld.Location.Location;
 
 public class Player {
@@ -10,7 +11,7 @@ public class Player {
     public Player(String name, Location currentLocation) {
         this.name = name;
         this.currentLocation = currentLocation;
-        this.inventory = new Inventory();
+        this.inventory = new Inventory(Item.TORCH, null);
     }
 
     public void moveTo(Location newLocation) {

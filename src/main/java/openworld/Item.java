@@ -5,4 +5,5 @@ public enum Item {
         KNIFE,
         AXE,
         TORCH,
+        DEAD_BODY,
 }

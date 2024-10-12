@@ -20,6 +20,10 @@ public abstract class Location {
         return name;
     }
 
+    public char getFirstLetter() {
+        return name.charAt(0);
+    }
+
     @Override
     public abstract String toString();
 

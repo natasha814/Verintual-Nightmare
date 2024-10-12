@@ -8,8 +8,10 @@ import javax.sound.sampled.*;
 
 import src.main.java.openworld.Location.ClownHouse;
 import src.main.java.openworld.Location.Forest;
+import src.main.java.openworld.Location.Graveyard;
 import src.main.java.openworld.Location.HauntedHouse;
 import src.main.java.openworld.Location.Location;
+import src.main.java.openworld.Location.LockedShed;
 import src.main.java.openworld.Player.Player;
 
 import java.io.IOException;
@@ -19,6 +21,19 @@ import java.io.File;
 public class World {
     private static Player player;
     private static List<Location> locations = new ArrayList<>();
+    private static Location forest = new Forest("Forest", "A dark forest filled with unknown dangers.", null);
+    private static Location forestWithAxe = new Forest("Forest", "A dark forest filled with unknown dangers.", Item.AXE);
+    private static Location clownHouse = new ClownHouse("Clown Tent", "A creepy tent filled with clowns", null);
+    private static Location clownHouseWithKey = new ClownHouse("Clown Tent", "A creepy tent filled with clowns", Item.KEY);
+    private static Location hauntedHouse = new HauntedHouse("Haunted House", "A creaky house filled with secrets", null);
+    private static Location hauntedHouseWithKnife = new HauntedHouse("Haunted House", "A creaky house filled with secrets", Item.KNIFE);
+    private static Location lockedShed = new LockedShed("Locked Shed", "A very old and grotty looking shed", Item.DEAD_BODY);
+    private static Location graveyard = new Graveyard("Graveyard", "A damp foul-smelling graveyard", null);
+    private static Location[][] gridOfLocations = {{graveyard, graveyard, forest, forest, forest},
+                                                    {lockedShed, forest, forest, hauntedHouseWithKnife, hauntedHouse},
+                                                    {forest, forest, forest, forest, forest},
+                                                    {forest, forestWithAxe, clownHouse, forest, forest},
+                                                    {forest, forest, clownHouseWithKey, forest, forest}};
     private URL url;
     private Clip clip;
 
@@ -91,7 +106,7 @@ public class World {
                 "Time for you to choose your fate. Do not be too quick to choose. Press 'I' for more information: ");
 
         boolean valid = false;
-        boolean valid2 = false;
+        // boolean valid2 = false;
 
         // User must press 'I' to continue
         while (!valid) {
@@ -101,40 +116,7 @@ public class World {
                     jumpScare.imageJump("src/main/java/openworld/scary1.png", 500);
                     System.out.println("Only Capitalized 'I'. Do not make me mad.");
                 } else {
-                    valid = true;
-                    System.out.println("You have two paths. Choose wisely.");
-
-                    // Storing location info
-                    Location location1 = locations.get(0);
-                    Location location2 = locations.get(1);
-                    char loc1FirstChar = location1.getName().charAt(0);
-                    char loc2FirstChar = location2.getName().charAt(0);
-
-                    System.out.println(location1.toString());
-                    System.out.println("or");
-                    System.out.println(location2.toString());
-                    System.out.println("Ready? Enter '" + loc1FirstChar + "' for " + location1.getName() + " or '"
-                            + loc2FirstChar + "' for " + location2.getName());
-
-                    // Choose between two locations
-                    while (!valid2) {
-                        if (userInput.hasNextLine()) {
-                            char choice = userInput.nextLine().charAt(0);
-                            if (choice != loc1FirstChar && choice != loc2FirstChar) {
-                                System.out.println("Invalid choice. Please enter '" + loc1FirstChar + "' or '"
-                                        + loc2FirstChar + "'.");
-                            } else {
-                                valid2 = true;
-                                if (choice == loc1FirstChar) {
-                                    location1.enter(player);
-                                    // world.player.moveTo(location1);
-                                } else {
-                                    location2.enter(player);
-                                    // world.player.moveTo(location2);
-                                }
-                            }
-                        }
-                    }
+                    valid=true;
                 }
             }
         }
@@ -144,6 +126,8 @@ public class World {
         int dotRow = 2, dotCol = 2; // Initial position of the dot (center of the grid)
 
         while (true) {
+            Location currentLocation = gridOfLocations[dotRow][dotCol];
+            currentLocation.enter(player);
             // Print the grid with the current position of the dot
             GameGrid.printGrid(rows, cols, dotRow, dotCol);
 
@@ -155,9 +139,9 @@ public class World {
             }
             
             // Get user input for moving the dot
-            System.out.print("Move (w - north, s - south, d - east, a - west, q - quit): ");
+            System.out.print("Move (w - north, s - south, d - east, a - west, q - quit, or i - to view your inventory): ");
             if (userInput.hasNextLine()) {
-                char move = userInput.nextLine().charAt(0);
+                char move = userInput.nextLine().toLowerCase().charAt(0);
 
                 // Update dot's position based on input
                 switch (move) {
@@ -177,6 +161,9 @@ public class World {
                         if (dotCol > 0)
                             dotCol--; // Move left
                         break;
+                    case 'i':
+                        System.out.println(player.getInventory().toString());    
+                        break;
                     case 'q':
                         System.out.println("Quitting the game.");
                         userInput.close();
@@ -185,6 +172,8 @@ public class World {
                         System.out.println("Invalid input! Use w, a, s, d, or q.");
                 }
             }
+            // Location currentLocation = gridOfLocations[dotRow][dotCol];
+            // currentLocation.enter(player);
         }
     }
 }
