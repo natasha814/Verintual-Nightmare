@@ -1,22 +1,23 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+import Location.Location;
 import Location.Forest;
+import Location.ClownHouse;
 
 public class World {
     private Player player;
-    private List<Locations> locations;
+    private List<Location> locations;
 
     public World(Player player) {
         this.player = player;
-        this.location = new ArrayList<>();
+        this.locations = new ArrayList<>();
         initializeLocations();
 
     }
 
     private void initializeLocations() {
-        Location clownHouse = new Clown_House("Clown House", "wkufjidhfhwf");
+        Location clownHouse = new ClownHouse("Clown House", "wkufjidhfhwf");
         Location forest = new Forest("Forest", "wkufjidhfhwf", "axe");
     }
 
