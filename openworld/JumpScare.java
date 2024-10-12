@@ -40,8 +40,4 @@ public class JumpScare {
         timer.start(); // Start the timer
     
     }
-    public static void main (String args[]){
-        JumpScare jumpScare = new JumpScare();
-        jumpScare.imageJump("openworld/scary1.png");
-    }
 }
