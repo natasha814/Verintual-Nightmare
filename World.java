@@ -1,22 +1,23 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+import Location.Location;
+import Location.ClownHouse;
 import Location.Forest;
 
 public class World {
     private Player player;
-    private List<Locations> locations;
+    private List<Location> locations;
 
     public World(Player player) {
         this.player = player;
-        this.location = new ArrayList<>();
+        this.locations = new ArrayList<>();
         initializeLocations();
 
     }
 
     private void initializelocations() {
-        Location clownHouse = new Clown_House("Clown House", "wkufjidhfhwf");
+        Location clownHouse = new ClownHouse("Clown House", "wkufjidhfhwf");
         Location forest = new Forest("Forest", "wkufjidhfhwf", "axe");
     }
 
@@ -31,15 +32,20 @@ public class World {
         String userName = userInput.nextLine();  
         System.out.println("Username is: " + userName);  
 
+        char info = userInput.nextLine();
         System.out.println("Time for you to choose your fate. Do not be too quick to choose, press 'I' for more information");
         
-        if 
+        if (info = 'I'){
+
+        } else{
+            System.out.println("Capitallized I. Do not make me mad.");
+        }
         
         
         System.out.println("Ready? Enter 'C' for Clown House or 'F' for Forest");
         
 
-        player.moveTo(choice);
+        player.moveTo();
 
         
     }
