@@ -34,4 +34,9 @@ public class Forest extends Location {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return getName() + ": " + getDescription();
+    }
+
 }

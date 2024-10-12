@@ -20,6 +20,9 @@ public abstract class Location {
         return name;
     }
 
+    @Override
+    public abstract String toString();
+
     public abstract void enter(Player player);
     
 }
