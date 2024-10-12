@@ -21,19 +21,23 @@ public class World {
     private static Player player;
     private static List<Location> locations = new ArrayList<>();
     private static Location forest = new Forest("Forest", "A dark forest filled with unknown dangers.", null);
-    private static Location forestWithAxe = new Forest("Forest", "A dark forest filled with unknown dangers.", Item.AXE);
+    private static Location forestWithAxe = new Forest("Forest", "A dark forest filled with unknown dangers.",
+            Item.AXE);
     private static Location clownHouse = new ClownHouse("Clown Tent", "A creepy tent filled with clowns", null);
-    private static Location clownHouseWithKey = new ClownHouse("Clown Tent", "A creepy tent filled with clowns", Item.KEY);
-    private static Location hauntedHouse = new HauntedHouse("Haunted House", "A creaky house filled with secrets",null);
-    private static Location hauntedHouseWithKnife = new HauntedHouse("Haunted House","A creaky house filled with secrets", Item.KNIFE);
-    private static Location lockedShed = new LockedShed("Locked Shed", "A very old and grotty looking shed",Item.DEAD_BODY);
+    private static Location clownHouseWithKey = new ClownHouse("Clown Tent", "A creepy tent filled with clowns",
+            Item.KEY);
+    private static Location hauntedHouse = new HauntedHouse("Haunted House", "A creaky house filled with secrets",
+            null);
+    private static Location hauntedHouseWithKnife = new HauntedHouse("Haunted House",
+            "A creaky house filled with secrets", Item.KNIFE);
+    private static Location lockedShed = new LockedShed("Locked Shed", "A very old and grotty looking shed",
+            Item.DEAD_BODY);
     private static Location graveyard = new Graveyard("Graveyard", "A damp foul-smelling graveyard", null);
     private static Location[][] gridOfLocations = { { graveyard, graveyard, forest, forest, forest },
-                                                    { lockedShed, forest, forest, hauntedHouseWithKnife, hauntedHouse },
-                                                    { forest, forest, forest, forest, forest },
-                                                    { forest, forestWithAxe, clownHouse, forest, forest },
-                                                    { forest, forest, clownHouseWithKey, forest, forest } };
-    private Clip clip;
+            { lockedShed, forest, forest, hauntedHouseWithKnife, hauntedHouse },
+            { forest, forest, forest, forest, forest },
+            { forest, forestWithAxe, clownHouse, forest, forest },
+            { forest, forest, clownHouseWithKey, forest, forest } };
 
     public World() {
     }
@@ -60,6 +64,7 @@ public class World {
         String background = "src/main/resources/background.wav";
         String scream = "src/main/resources/jumpscare.wav";
         String jumpscareRand = "src/main/resources/randomScare.wav";
+        String laughingScare = "src/main/resources/laugh.wav";
 
         Thread backgroundThread = new Thread(() -> {
             AudioManager.playAudio(background);
@@ -102,9 +107,44 @@ public class World {
             }
         });
 
+        Thread laughingThread = new Thread(() -> {
+            Random random = new Random();
+            while (true) {
+                try {
+                    int randomInterval = 1100 + random.nextInt(4000);
+
+                    Thread.sleep(randomInterval);
+
+                    File audioFile = new File(laughingScare);
+                    AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+                    Clip clip = AudioSystem.getClip();
+                    clip.open(audioStream);
+                    clip.start();
+
+                    // Add a listener to close the clip when finished
+                    clip.addLineListener(event -> {
+                        if (event.getType() == LineEvent.Type.STOP) {
+                            clip.close();
+                        }
+                    });
+
+                    // Wait for the audio to finish playing
+                    while (clip.isRunning()) {
+                        Thread.sleep(100); // Check every 100 ms if the clip is still running
+                    }
+
+                    audioStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         backgroundThread.start();
 
         jumpscareRandomThread.start();
+
+        laughingThread.start();
 
         Scanner userInput = new Scanner(System.in);
 
@@ -142,7 +182,7 @@ public class World {
                 currentLocation.enter(player);
             } else if (currentLocation != prevLocation) {
                 if (currentLocation.getItem() != null) {
-                    
+
                 }
             }
             prevLocation = currentLocation;
