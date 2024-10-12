@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class JumpScare {
 
-    public void imageJump(String filepath){
+    public void imageJump(String filepath, int time){
         // Load the image
         BufferedImage image = null;
         try {
@@ -33,11 +33,15 @@ public class JumpScare {
         frame.setVisible(true);
 
         // Create a timer to close the frame after 1 second (500 milliseconds)
-        Timer timer = new Timer(500, e -> {
+        Timer timer = new Timer(time, e -> {
             frame.dispose(); // Close the frame
         });
         timer.setRepeats(false); // Only execute once
         timer.start(); // Start the timer
     
+    }
+    public static void main (String args[]){
+        JumpScare jumpScare = new JumpScare();
+        jumpScare.imageJump("openworld/scary1.png");
     }
 }

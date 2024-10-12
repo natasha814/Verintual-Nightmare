@@ -1,27 +1,23 @@
-package src.main.java.openworld;
+package openworld;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import openworld.Location.Location;
+import openworld.Player.Player;
+import openworld.Location.Forest;
+import openworld.Location.ClownHouse;
 
 import javax.sound.sampled.*;
-
-import src.main.java.openworld.Location.ClownHouse;
-import src.main.java.openworld.Location.Forest;
-import src.main.java.openworld.Location.Location;
-import src.main.java.openworld.Player.Player;
-
-import java.io.IOException;
-import java.net.URL;
 import java.io.File;
+import java.io.IOException;
 
 public class World {
     private Player player;
     private static List<Location> locations = new ArrayList<>();
-    private URL url;
-    private Clip clip;
 
     public World() {
+       
     }
 
     private void initializeWorld(Scanner userInput) {
@@ -39,45 +35,9 @@ public class World {
 
     public static void main(String[] args) {
         World world = new World();
-
-        String filePath = "src/main/resources/background.wav";
-
-        // Create a thread for playing audio
-        Thread audioThread = new Thread(() -> {
-            try {
-                // Create a File object
-                File audioFile = new File(filePath);
-
-                // Get audio input stream
-                AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
-
-                // Get a clip resource
-                Clip clip = AudioSystem.getClip();
-
-                // Open audio clip and load samples from the audio input stream
-                clip.open(audioStream);
-
-                // Start playing the audio
-                clip.start();
-
-                // Keep the thread alive until the audio finishes playing
-                clip.addLineListener(event -> {
-                    if (event.getType() == LineEvent.Type.STOP) {
-                        clip.close();
-                    }
-                });
-
-                // Sleep for the duration of the clip
-                Thread.sleep(clip.getMicrosecondLength() / 1000);
-                audioStream.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-
-        // Start the audio thread
-        audioThread.start();
-
+        JumpScare jumpScare = new JumpScare();
+        jumpScare.imageJump("openworld/forest.jpg", 2000);
+      
         // Using one Scanner for the entire program
         Scanner userInput = new Scanner(System.in);
 
@@ -95,6 +55,7 @@ public class World {
             if (userInput.hasNextLine()) {
                 char info = userInput.nextLine().charAt(0);
                 if (info != 'I') {
+                    jumpScare.imageJump("openworld/scary1.png", 500);
                     System.out.println("Only Capitalized 'I'. Do not make me mad.");
                 } else {
                     valid = true;
