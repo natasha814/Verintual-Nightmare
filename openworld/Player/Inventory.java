@@ -13,6 +13,9 @@ public class Inventory {
 
     public Inventory() {
         slots = new ArrayList<Item>(2);
+        for (int i=0; i<2; i++) {
+            slots.add(null);
+        }
     }
 
 
