@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 import openworld.Location.Location;
 import openworld.Player.Player;
+import src.main.java.openworld.JumpScare;
 import openworld.Location.Forest;
 import openworld.Location.ClownHouse;
 

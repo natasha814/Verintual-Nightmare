@@ -1,4 +1,4 @@
-package openworld;
+package src.main.java.openworld;
 
 import javax.swing.*;
 import java.awt.*;
