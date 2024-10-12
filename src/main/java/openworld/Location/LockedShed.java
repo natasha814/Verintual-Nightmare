@@ -3,6 +3,7 @@ package src.main.java.openworld.Location;
 import java.util.Scanner;
 
 import src.main.java.openworld.Item;
+import src.main.java.openworld.JumpScare;
 import src.main.java.openworld.Player.Player;
 
 public class LockedShed extends Location {
@@ -25,6 +26,8 @@ public class LockedShed extends Location {
 
     @Override
     public void enter(Player player) {
+        JumpScare jumpScare = new JumpScare();
+        jumpScare.imageJump("src/main/java/openworld/images/shed.jpg", 2000);
         System.out.println("You enter the " + getName() + ": " + getDescription());
         if (item != null) {
             String a_or_an = "a ";
