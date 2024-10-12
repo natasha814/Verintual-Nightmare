@@ -1,6 +1,6 @@
 package Location;
 
-public class ClownHouse extends Location{
+public class ClownHouse extends Location {
 
     public ClownHouse(String name, String description) {
         super(name, description);
@@ -8,8 +8,7 @@ public class ClownHouse extends Location{
 
     @Override
     public void enter(Player player) {
-        System.out.println("You enter the "+getName()+": "+getDescription());
+        System.out.println("You enter the " + getName() + ": " + getDescription());
     }
-    
 
 }
