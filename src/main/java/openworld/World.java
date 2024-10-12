@@ -22,8 +22,9 @@ public class World {
     }
 
     private void initializeWorld(Scanner userInput) {
-        Location hauntedHouse = new HauntedHouse("Haunted House", "A creepy house filled with spiders.", Item.KEY);
+        Location hauntedHouse = new HauntedHouse("Huanted House", "A creepy house filled with clowns.", Item.KEY);
         Location forest = new Forest("Forest", "A dark forest filled with unknown dangers.", Item.AXE);
+
         locations.add(hauntedHouse);
         locations.add(forest);
 
