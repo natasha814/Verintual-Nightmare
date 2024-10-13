@@ -19,6 +19,9 @@ import java.io.File;
 
 public class World {
     private static Player player;
+    private static char userCharInput;
+    private static String userCharacter;
+
     private static List<Location> locations = new ArrayList<>();
     private static Location forest = new Forest("Forest", "A dark forest filled with unknown dangers.", null);
     private static Location forestWithAxe = new Forest("Forest", "A dark forest filled with unknown dangers.",
@@ -57,6 +60,7 @@ public class World {
     }
 
     public static void main(String[] args) {
+
         World world = new World();
         JumpScare jumpScare = new JumpScare();
         jumpScare.imageJump("src/main/java/openworld/forest.jpg", 2000);
@@ -146,17 +150,37 @@ public class World {
 
         laughingThread.start();
 
-        Scanner userInput = new Scanner(System.in);
+        Scanner userInputChar = new Scanner(System.in);
+        world.initializeWorld(userInputChar);
 
-        world.initializeWorld(userInput);
+        System.out.print("Choose your character, P(🎃), W(🧙), or G(👻): ");
+        char userCharInput;
+
+        String input = userInputChar.nextLine();
+        userCharInput = input.charAt(0);
+
+        switch (userCharInput) {
+            case 'P':
+                userCharacter = "🎃";
+                break;
+            case 'W':
+                userCharacter = "🧙";
+                break;
+            case 'G':
+                userCharacter = "👻";
+                break;
+            default:
+                jumpscareThread.start();
+                System.out.println("Invalid. You are a poo then.");
+                userCharacter = "💩";
+                break;
+        }
 
         System.out.println(
                 "Time for you to choose your fate. Do not be too quick to choose. Press 'I' for more information: ");
-
+        Scanner userInput = new Scanner(System.in);
         boolean valid = false;
-        // boolean valid2 = false;
 
-        // User must press 'I' to continue
         while (!valid) {
             if (userInput.hasNextLine()) {
                 char info = userInput.nextLine().charAt(0);
@@ -187,7 +211,7 @@ public class World {
             }
             prevLocation = currentLocation;
             // Print the grid with the current position of the dot
-            GameGrid.printGrid(rows, cols, dotRow, dotCol);
+            GameGrid.printGrid(rows, cols, dotRow, dotCol, userCharacter);
 
             // Get user input for moving the dot
             System.out.print(

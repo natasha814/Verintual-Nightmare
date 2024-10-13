@@ -6,13 +6,23 @@ import src.main.java.openworld.Item;
 import src.main.java.openworld.JumpScare;
 import src.main.java.openworld.Player.Player;
 
+import javax.swing.SwingUtilities;
+
+import src.main.java.openworld.AudioManager;
+import src.main.java.openworld.Countdown;
+
 public class LockedShed extends Location {
     private Item item;
+    String running = "src/main/resources/running.wav";
 
     public LockedShed(String name, String description, Item item) {
         super(name, description);
         this.item = item;
     }
+
+    Thread runningThread = new Thread(() -> {
+        AudioManager.playAudio(running);
+    });
 
     public void tryToEnter(Player player) {
         if (player.getInventory().searchForItem(Item.KEY)) {
@@ -29,7 +39,7 @@ public class LockedShed extends Location {
         JumpScare jumpScare = new JumpScare();
         jumpScare.imageJump("src/main/java/openworld/images/shed.jpg", 2000);
         System.out.println("You enter the " + getName() + ": " + getDescription());
-        
+
         itemOptions(player);
     }
 
@@ -44,7 +54,9 @@ public class LockedShed extends Location {
             System.out.println("Do you want a closer look? [Y/N]");
             char info = userInput.nextLine().toLowerCase().charAt(0);
             if (info == 'y') {
+                runningThread.start();
                 // YOURE GETTING CHASED AAAAAAA
+                SwingUtilities.invokeLater(Countdown::new);
             }
         } else if (item != null) {
             String a_or_an = "a ";
